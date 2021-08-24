@@ -25,14 +25,14 @@ Route::get('/', 'HomeController@index')->name('home');
 
 
 //Requests
-Route::get('requests','RequestController@index');
-Route::post('new-request','RequestController@newRequest');
-Route::get('voucher-print/{id}','RequestController@voucherPrint');
+Route::get('requests','VoucherController@index');
+Route::post('new-request','VoucherController@newRequest');
+Route::get('voucher-print/{id}','VoucherController@voucherPrint');
 
 
 
 
-Route::get('for-verifications','RequestController@forVerifications');
+// Route::get('for-verifications','RequestController@forVerifications');
 
 
 }

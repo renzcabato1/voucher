@@ -68,6 +68,12 @@
   /* font-weight: bold; */
   color:black;
 }
+        .upperText
+        {
+            
+            text-transform:uppercase;
+
+        }
     </style>
 </head>
 <body >
@@ -98,16 +104,16 @@
                     <li @if($header == 'Home') class='active' @endif>
                         <a href="{{ url('/') }}"  onclick='show()' ><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> </a>
                     </li>
-                    <li @if($header == 'Requests') class='active' @endif>
-                        <a href="{{ url('/requests') }}" onclick='show()'><i class="fa fa-paper-plane"></i> <span class="nav-label">Request</span><span class="label label-warning float-right">0</span></a>
+                    <li @if($header == 'Vouchers') class='active' @endif>
+                        <a href="{{ url('/requests') }}" onclick='show()'><i class="fa fa-paper-plane"></i> <span class="nav-label">Vouchers</span></a>
                     </li>
-                    <li @if($header == 'For Verifications') class='active' @endif>
+                    {{-- <li @if($header == 'For Verifications') class='active' @endif>
                         <a href="{{ url('/for-verifications') }}" onclick='show()'><i class="fa fa-check"></i> <span class="nav-label">For Verifications</span><span class="label label-primary float-right">0</span></a>
                     </li>
 
                     <li @if($header == 'For Payments') class='active' @endif>
                         <a href="{{ url('/for-payments') }}" onclick='show()'><i class="fa fa-money"></i> <span class="nav-label">For Payments</span><span class="label label-info float-right">0</span></a>
-                    </li>
+                    </li> --}}
                     <li  @if($header == 'Reports') class='active' @endif>
                         <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
                        
@@ -176,7 +182,12 @@
                     document.getElementById('logout-form').submit();
                 }
             </script>
-           
+            
+            <!-- Mainly scripts -->
+       
+
+            <!-- Custom and plugin javascript -->
+        
             <script src="{{ asset('bootstrap/js/jquery-3.1.1.min.js') }}"></script>
             <script src="{{ asset('bootstrap/js/popper.min.js') }}"></script>
             <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
@@ -254,6 +265,98 @@
                 <script src="{{ asset('bootstrap/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
 
                 <script src="{{ asset('bootstrap/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+                    <!-- ChartJS-->
+            <script src="{{ asset('bootstrap/js/plugins/chartJs/Chart.min.js') }}"></script>
+            <script src="{{ asset('bootstrap/js/demo/chartjs-demo.js') }}"></script>
+            @if($header == 'Home')
+            
+            <script>
+             var items = {!! json_encode($items) !!};
+             var requests = {!! json_encode($requests) !!};
+            //  console.log(requests);
+            //  console.log(items);
+
+             var voucher = [];
+             var amount = [];
+             var paid_weight = [];
+             for (let i = 0; i < items.length; i++) {
+               for(var a = 0; a<requests.length; a++)
+               {
+                    // console.log(requests[a].months);
+                    // console.log(items[i]);
+                   if(requests[a].months == items[i])
+                   {
+                       voucher[i] = requests[a].data; 
+                       amount[i] = requests[a].sums; 
+                       paid_weight[i] = requests[a].paid_weight; 
+                       break;
+                   }
+                   else
+                   {
+                    voucher[i] = 0; 
+                    amount[i] = 0;
+                    paid_weight[i] = 0;
+                   }
+               }
+            }
+            var barData = {
+                labels: items,
+                datasets: [
+                // {
+                //     label: "Voucher",
+                //     backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                //     pointBorderColor: "#fff",
+                //     data: voucher
+                // },
+                {
+                    label: "Amount",
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data:amount,
+                }
+            ]
+        };
+
+        var monthly_paid = {
+                labels: items,
+                datasets: [
+                // {
+                //     label: "Voucher",
+                //     backgroundColor: 'rgba(220, 220, 220, 0.5)',
+                //     pointBorderColor: "#fff",
+                //     data: voucher
+                // },
+                {
+                    label: "Weight(KG)",
+                    backgroundColor: 'rgb(0, 92, 230, 0.5)',
+                    borderColor: "rgb(0, 92, 230, 0.7)",
+                    pointBackgroundColor: "rgb(0, 92, 230, 1)",
+                    pointBorderColor: "#fff",
+                    data:paid_weight,
+                }
+            ]
+        };
+
+        var barOptions = {
+            responsive: true,
+            title: {
+            display: false,
+            text: 'Stacked Bars'
+        },
+        };
+
+
+    var ctx2 = document.getElementById("monthly_report").getContext("2d");
+    new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+            
+
+    var daily = document.getElementById("daily_request").getContext("2d");
+    new Chart(daily, {type: 'bar', data: monthly_paid, options:barOptions});
+            </script>
+           @endif
+
                 <script>
                        $(document).ready(function(){
             $('.dataTables-example').DataTable({

@@ -1,25 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Requests;
-use PDF;
+use App\Voucher;
 use App\History;
+use PDF;
 use Illuminate\Http\Request;
 
-class RequestController extends Controller
+class VoucherController extends Controller
 {
     //
-
+    
     public function index()
     {
 
-        $last_request = Requests::orderBy('id','desc')->first();
-        $all_request_today = Requests::orderBy('id','desc')->where('date_encode','=',date('Y-m-d'))->get();
-     
+        $last_request = Voucher::orderBy('id','desc')->first();
+        $all_request_today = Voucher::orderBy('id','desc')->where('date_encode','=',date('Y-m-d'))->get();
+        
         return view('requests',array(
 
             'subheader' => '',
-            'header' => 'Requests',
+            'header' => 'Vouchers',
             'last_request' => $last_request,
             'all_request_today' => $all_request_today,
         ));
@@ -38,14 +38,14 @@ class RequestController extends Controller
     {
         // dd($request->all());
 
-        $last_request = Requests::orderBy('id','desc')->first();
+        $last_request = Voucher::orderBy('id','desc')->first();
         if($last_request == null)
         {
             $code = 1;
         }
         else
         {
-            if(date('Y-m',strtotime($last_request->date_encode)) == data('Y-m'))
+            if(date('Y-m',strtotime($last_request->date_encode)) == date('Y-m'))
             {
             $code = $last_request->code + 1;
             }
@@ -56,8 +56,9 @@ class RequestController extends Controller
         }
 
         
-        $data = new Requests;
-        $data->supplier = strtoupper($request->supplier);
+        $data = new Voucher;
+        // dd(($request->all()));
+        $data->supplier = strtoupper($request->supplier_name);
         $data->driver_name = strtoupper($request->driver_name);
         $data->plate_number = strtoupper($request->plate_number);
         $data->truck_type = strtoupper($request->truck_type);
@@ -88,12 +89,13 @@ class RequestController extends Controller
         $data->check_by = strtoupper($request->checked_by);
         $data->verified_by = strtoupper($request->approved_by);
         $data->code = $code;
+        $data->location = "VALENZUELA";
         $data->save();
 
         $return = json_encode($data->getAttributes());
 
         $new_history = new History;
-        $new_history->requests_id = $data->id;
+        $new_history->voucher_id = $data->id;
         $new_history->action = "New Request";
         $new_history->action_by = auth()->user()->id;
         $new_history->data =  $return;
@@ -106,7 +108,7 @@ class RequestController extends Controller
 
     public function voucherPrint(Request $request,$id)
     {
-        $request = Requests::where('id',$id)->first();
+        $request = Voucher::where('id',$id)->first();
         $pdf = PDF::loadView('voucher_print',array(
 
             'request' => $request,

@@ -129,11 +129,11 @@
             <thead>
             <tr>
                 
-                <th>System Code </th>
-                <th>Supplier</th>
-                <th>Type</th>
-                <th>Gross Weight</th>
-                <th>Tare Weight</th>
+                <th>SYSTEM CODE </th>
+                <th>SUPPLIER</th>
+                <th>TYPE</th>
+                <th>GROSS WEIGHT</th>
+                <th>TARE WEIGHT</th>
                 <th>MC</th>
                 <th>NET</th>
                 <th>DEDUCTION</th>

@@ -35,7 +35,15 @@
 
     <link href="{{ asset('bootstrap/css/plugins/jasny/jasny-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bootstrap/css/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet">
-    
+    <style type="text/css" media="print">
+        @page { 
+           
+            #renz {
+                font-size:8px; 
+                size: landscape;
+            }
+        }
+    </style>
     <style>
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -118,15 +126,26 @@
                         <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
                        
                         <ul class="nav nav-second-level collapse">
-                            <li @if($subheader == 'Daily Inventory') class='active' @endif><a href="{{ url('/report-daily-inventory') }}" onclick='show()'>Daily Inventory</a></li> 
+                            <li @if($subheader == 'Inventory') class='active' @endif><a href="{{ url('/report-daily-inventory') }}" onclick='show()'>Inventory</a></li> 
                         </ul>
                         <ul class="nav nav-second-level collapse">
-                            <li @if($subheader == 'Daily Reimbursement') class='active' @endif><a href="{{ url('/report-daily-reimbursement') }}" onclick='show()'>Daily Reimbursement</a></li> 
+                            <li @if($subheader == 'Reimbursement') class='active' @endif><a href="{{ url('/report-daily-reimbursement') }}" onclick='show()'>Reimbursement</a></li> 
                         </ul>
                         <ul class="nav nav-second-level collapse">
-                            <li @if($subheader == 'Daily Receiving') class='active' @endif><a href="{{ url('/report-daily-reimbursement') }}" onclick='show()'>Daily Receiving</a></li> 
+                            <li @if($subheader == 'Receiving') class='active' @endif><a href="{{ url('/receiving') }}" onclick='show()'>Receiving</a></li> 
                         </ul>
                     </li>
+
+                    <li  @if($header == 'Accounting Reports') class='active' @endif>
+                        <a href="#"><i class="fa fa-database"></i> <span class="nav-label">Accounting Reports</span><span class="fa arrow"></span></a>
+                       
+                        <ul class="nav nav-second-level collapse">
+                            <li @if($subheader == 'Accounting Monitoring') class='active' @endif><a href="{{ url('/accounting-monitoring') }}" onclick='show()'>Monitoring </a></li> 
+                        </ul>
+                       
+                    </li>
+                    
+                    
                 </ul>
             </div>
         </nav>

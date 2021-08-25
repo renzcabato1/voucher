@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Voucher;
 use App\History;
 use PDF;
+use DB;
+use \Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -122,16 +125,37 @@ class VoucherController extends Controller
     public function reportDailyReimbursement (Request $request)
     {
         $date = $request->date;
-
-        $data_info = Voucher::where('date_encode','=',$request->date)->first();
-        $data_all = Voucher::where('date_encode','=',$request->date)->orderBy('id','asc')->get();
+        $dateto = $request->dateto;
+        $data_info = Voucher::where('date_encode','=',$request->dateto)->first();
+        $data_all = Voucher::whereBetween('date_encode', [$date, $dateto])->orderBy('id','asc')->get();
         return view('daily_reimbursement',array(
 
-            'subheader' => '',
-            'header' => 'Daily Reimbursement',
+            'subheader' => 'Reimbursement',
+            'header' => 'Reports',
             'date' => $date,
             'data_info' => $data_info,
             'data_all' => $data_all,
+            'dateto' => $dateto,
+            
+
+        ));
+    }
+    public function accountingMonitoring (Request $request)
+    {
+        $date_from = $request->date_from;
+        $date_to = $request->date_to;
+
+        // dd($data);
+        $data_all = Voucher::whereBetween('date_encode', [$date_from, $date_to])->orderBy('id','asc')->get();
+        
+        return view('accounting_monitoring',array(
+
+            'subheader' => 'Accounting Monitoring',
+            'header' => 'Accounting Reports',
+            'date_from' => $date_from,
+            'date_to' => $date_to,
+            'data_all' => $data_all,
+            
 
         ));
     }

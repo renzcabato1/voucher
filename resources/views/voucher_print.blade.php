@@ -142,7 +142,7 @@
             <td >
                 <br><br>
                 <br>
-                <span style="text-decoration:overline"> RECEIVED PAYMENT BY</span>
+                <span style="text-decoration:overline"> RECEIVED THE FULL PAYMENT </span><br>DESCRIBED ABOVE BY
             </td>
         </tr>
     </table>

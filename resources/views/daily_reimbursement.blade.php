@@ -32,7 +32,12 @@
                     <div class="row"> 
                     
                         <div class="col-sm-3">
-                            <div class="form-group"><label>Date</label> <input value="{{$date}}" max="{{date('Y-m-d')}}" type="date" name="date" placeholder="" class="form-control " required>
+                            <div class="form-group"><label>Date From</label> <input value="{{$date}}" max="{{date('Y-m-d')}}" type="date" name="date" placeholder="" class="form-control " required>
+                            </div>
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group"><label>Date To</label> <input value="{{$dateto}}" max="{{date('Y-m-d')}}" type="date" name="dateto" placeholder="" class="form-control " required>
                             </div>
                             
                         </div>
@@ -53,7 +58,7 @@
     @if($data_info) <button class="btn btn-success "  onclick="printDiv('print')"  type="button"><i class="fa fa-print"></i>&nbsp;&nbsp;<span class="bold">Print</span></button>
         <br>
         <br>
-        @endif
+     
     <div class="row" id='print' style='color:black;'>
         <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -63,7 +68,7 @@
             <table style="border:1px solid black;" class="table table-hover text-center" >
             <thead>
                 <tr>
-                    <th style="border:1px solid black;" colspan = 8>@if($data_info){{$data_info->location}} - {{date('F d, Y', strtotime($data_info->date_encode))}}@endif </th>
+                    <th style="border:1px solid black;" colspan = 8>@if($data_info){{$data_info->location}} | Date : {{date('M d, Y', strtotime($date))}} - {{date('M d, Y', strtotime($dateto))}}@endif </th>
                 </tr>
             <tr>
                 <th style="border:1px solid black;" rowspan = 2>Date </th>
@@ -277,7 +282,7 @@
                                         <b>{{number_format($mw,2)}}</b>
                                     </td>
                                     <td style="border:2px solid black;" >
-                                        <b>{{number_format($locc + $mw)}}</b>
+                                        <b>{{number_format($locc + $mw,2)}}</b>
                                     </td>
                                 </tr>
                             </table>
@@ -317,6 +322,7 @@
             </div>
         </div>
     </div>
+    @endif
     </div>
 </div>
 <script>

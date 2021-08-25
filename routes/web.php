@@ -29,7 +29,7 @@ Route::get('requests','VoucherController@index');
 Route::post('new-request','VoucherController@newRequest');
 Route::get('voucher-print/{id}','VoucherController@voucherPrint');
 Route::get('report-daily-reimbursement','VoucherController@reportDailyReimbursement');
-
+Route::get('accounting-monitoring','VoucherController@accountingMonitoring');
 
 
 // Route::get('for-verifications','RequestController@forVerifications');

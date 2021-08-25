@@ -46,15 +46,15 @@
    <table width='100%' border=1 cellspacing='0px'>
         <tr>
             <td width='70%;'>
-                Paid To : <b> {{$request->supplier}} </b>
+                PAID TO : <b> {{$request->supplier}} </b>
             </td>
             <td width='30%;'>
-                Date : <b> {{date('M d, Y h:i a')}}</b>
+                Date : <b> {{date('M d, Y h:i A')}}</b>
             </td>
         </tr>
         <tr>
             <td>
-                Driver's Name :
+                DRIVER'S NAME :  <b>{{$request->driver_name}} </b>
             </td>
             <td>
                 System Code : <b> {{date('Y-m',strtotime($request->date_encode))}}-{{str_pad($request->code, 5, '0', STR_PAD_LEFT)}} </b>
@@ -123,7 +123,7 @@
         </tr>
     </table>
     <br>
-    <table border="1" width='100%' style='text-align:center;'>
+    <table border="1" width='100%' style='text-align:center;font-size:10px;'>
         <tr style="border:0px;">
             <td ><br><br>
                 {{strtoupper($request->encode_by)}}<br>

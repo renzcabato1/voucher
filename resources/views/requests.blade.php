@@ -128,13 +128,17 @@
             <table class="table table-striped table-bordered table-hover dataTables-example" >
             <thead>
             <tr>
-                <th>Supplier</th>
+                
                 <th>System Code </th>
-                <th>Gross</th>
+                <th>Supplier</th>
+                <th>Type</th>
+                <th>Gross Weight</th>
+                <th>Tare Weight</th>
                 <th>MC</th>
                 <th>NET</th>
                 <th>DEDUCTION</th>
                 <th>UNIT PRICE</th>
+                <th>PAYMENT WEIGHT</th>
                 <th>AMOUNT</th>
                 <th>ACTION</th>
             </tr>
@@ -142,21 +146,27 @@
             <tbody>
                 @foreach($all_request_today as $request)
 
-                {{-- <tr>
-                    <td>{{$request->supplier}}</td>
+                <tr>
                     <td>{{date('Y-m',strtotime($request->date_encode))}}-{{str_pad($request->code, 5, '0', STR_PAD_LEFT)}}</td>
-                    <td>{{$request->scf}}</td>
+                 
+                    <td>{{$request->supplier}}</td>
+                    <td>{{$request->material_type}}</td>
                     <td>{{$request->gross}}</td>
+                    <td>{{$request->tare}}</td>
                     <td>{{$request->mc}} %</td>
                     <td>{{$request->net}}</td>
                     <td>{{$request->deduction}}</td>
                     <td>{{$request->unit_price}}</td>
+                    <td>{{$request->payment_weight}}</td>
                     <td>{{$request->total}}</td>
-                    <td> <a href="{{ url('/voucher-print/'.$request->id.'') }}" target='_'> <button class="btn btn-sm btn-warning" data-target="#edit_data{{$request->id}}" title='print' data-toggle="modal" ><i class="fa fa-print"></i></button></a></td>
-                </tr> --}}
+                    <td> 
+                        <a href="{{ url('/voucher-print/'.$request->id.'') }}" target='_blank'> <button class="btn btn-sm btn-warning" data-target="#edit_data{{$request->id}}" title='print' data-toggle="modal" ><i class="fa fa-print"></i></button>
+                        </a>
+                    </td>
+                </tr>
                 @endforeach
-            
-            </tfoot>
+            </tbody>
+               
             </table>
                 </div>
 

@@ -28,7 +28,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('requests','VoucherController@index');
 Route::post('new-request','VoucherController@newRequest');
 Route::get('voucher-print/{id}','VoucherController@voucherPrint');
-
+Route::get('report-daily-reimbursement','VoucherController@reportDailyReimbursement');
 
 
 

@@ -65,13 +65,14 @@ class VoucherController extends Controller
         $data->material_type = $request->item;
         $data->gross = $request->gross;
         $data->tare = $request->tare;
+        $net = round($request->gross - $request->tare);
         $data->net = round($request->gross - $request->tare);
         $data->mc = $request->mc;
         $data->ot = $request->ot;
         $data->pm = $request->pm;
         if($data->mc > 12)
         {
-            $payment_weight = round(((100-$request->mc)/88)*$data->net);
+            $payment_weight = round(((100-$request->mc)/88)*$net);
             $deduction = $net - $payment_weight;
         }
         else
@@ -116,5 +117,22 @@ class VoucherController extends Controller
         // $pdf->setPaper(array(0, 0, 612, 440), 'portrait');
       
         return $pdf->stream('voucher_print.pdf');
+    }
+
+    public function reportDailyReimbursement (Request $request)
+    {
+        $date = $request->date;
+
+        $data_info = Voucher::where('date_encode','=',$request->date)->first();
+        $data_all = Voucher::where('date_encode','=',$request->date)->orderBy('id','asc')->get();
+        return view('daily_reimbursement',array(
+
+            'subheader' => '',
+            'header' => 'Daily Reimbursement',
+            'date' => $date,
+            'data_info' => $data_info,
+            'data_all' => $data_all,
+
+        ));
     }
 }

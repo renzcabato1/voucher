@@ -56,7 +56,9 @@
             </div>
         </div>
     </div>
-    @if($date_from) <button class="btn btn-success "  onclick="printDiv('renz')"  type="button"><i class="fa fa-print"></i>&nbsp;&nbsp;<span class="bold">Print</span></button>
+    @if($date_from) 
+    {{-- <button class="btn btn-success "  onclick="printDiv('renz')"  type="button"><i class="fa fa-print"></i>&nbsp;&nbsp;<span class="bold">Print</span>
+    </button> --}}
     <br>
     <br>
     <div class="row" id='renz' style='color:black;'>
@@ -65,7 +67,7 @@
                 <div class="ibox-content">
 
                     <div class="table-responsive">
-                <table  style="border:1px solid black;font-size:8px;" width="100%" class=" text-center" >
+                <table  style="border:1px solid black;" width="100%" class="table text-center dataTables-example" >
                     <thead>
                         <tr>
                             <th style="border:1px solid black;" colspan = 30>Date : {{date('F d, Y',strtotime($date_from))}} - {{date('F d, Y',strtotime($date_to))}} </th>

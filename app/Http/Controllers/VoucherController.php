@@ -109,7 +109,57 @@ class VoucherController extends Controller
         return back();
 
     }
+    public function editRequest(Request $request,$id)
+    {
+        $data = Voucher::where('id','=',$id)->first();
+        $history_data = json_encode($data);
+        $data->supplier = strtoupper($request->supplier_name);
+        $data->driver_name = strtoupper($request->driver_name);
+        $data->plate_number = strtoupper($request->plate_number);
+        $data->truck_type = strtoupper($request->truck_type);
+        $data->material_type = $request->item;
+        $data->gross = $request->gross;
+        $data->tare = $request->tare;
+        $net = round($request->gross - $request->tare);
+        $data->net = round($request->gross - $request->tare);
+        $data->mc = $request->mc;
+        $data->ot = $request->ot;
+        $data->pm = $request->pm;
+        if($data->mc > 12)
+        {
+            $payment_weight = round(((100-$request->mc)/88)*$net);
+            $deduction = $net - $payment_weight;
+        }
+        else
+        {
+            $deduction = 0;
+            $payment_weight = $data->net;
+        }
+        $data->deduction = $deduction;
+        $data->payment_weight = $payment_weight;
+        $total = round($payment_weight * $request->unit_price);
+        $data->unit_price = $request->unit_price;
+        $data->total = $total;
+        $data->date_encode = date('Y-m-d');
+        $data->encode_by = strtoupper(auth()->user()->name);
+        $data->check_by = strtoupper($request->checked_by);
+        $data->verified_by = strtoupper($request->approved_by);
+        $data->location = "VALENZUELA";
+        $data->save();
 
+        $return = json_encode($data->getAttributes());
+
+        $new_history = new History;
+        $new_history->voucher_id = $data->id;
+        $new_history->action = "Edit Request";
+        $new_history->action_by = auth()->user()->id;
+        $new_history->data =  $history_data;
+        $new_history->save();
+
+        $request->session()->flash('status','Successfully submitted edit Request');
+        return back();
+
+    }
     public function voucherPrint(Request $request,$id)
     {
         $request = Voucher::where('id',$id)->first();

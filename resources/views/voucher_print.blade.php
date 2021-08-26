@@ -81,7 +81,7 @@
         </tr>
         <tr>
             <td colspan=3>
-              TRUCK TYPE : 
+              TRUCK TYPE : {{$request->truck_type}}
             </td>
               <td>
                 NET WEIGHT : {{$request->net}} KG

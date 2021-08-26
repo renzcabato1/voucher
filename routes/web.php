@@ -30,7 +30,7 @@ Route::post('new-request','VoucherController@newRequest');
 Route::get('voucher-print/{id}','VoucherController@voucherPrint');
 Route::get('report-daily-reimbursement','VoucherController@reportDailyReimbursement');
 Route::get('accounting-monitoring','VoucherController@accountingMonitoring');
-
+Route::post('edit-request/{id}','VoucherController@editRequest');
 
 // Route::get('for-verifications','RequestController@forVerifications');
 
